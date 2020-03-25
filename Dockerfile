@@ -19,7 +19,9 @@ MAINTAINER junior <ijuniorfu@gmail.com>
 RUN add-apt-repository -y ppa:ondrej/php \
     && apt-get update \
     && apt-get install -y mcrypt libmcrypt-dev php7.4-fpm php7.4-cli php7.4-readline php7.4-mbstring php7.4-zip php7.4-intl php7.4-json php7.4-xml php7.4-curl php7.4-gd php7.4-pdo php7.4-mysql php-imagick php-redis php-mongodb php-memcache \
-    && apt-get install -y nginx
+    && apt-get install -y nginx \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 COPY --from=staging /usr/lib/php/20190902/mcrypt.so /usr/lib/php/20190902/mcrypt.so
 RUN touch /etc/php/7.4/mods-available/mcrypt.ini \
