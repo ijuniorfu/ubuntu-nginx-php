@@ -1,8 +1,11 @@
-FROM ijuniorfu/ubuntu-base as staging
+FROM ubuntu:bionic as staging
 
-RUN add-apt-repository -y ppa:ondrej/php \
-    && apt-get update \
-    && apt-get install -y mcrypt libmcrypt-dev php7.4-cli php7.4-dev
+RUN apt-get update \
+&& apt-get install -y software-properties-common language-pack-en-base \
+&& LC_ALL=en_US.UTF-8 \
+&& add-apt-repository -y ppa:ondrej/php \
+&& apt-get update \
+&& apt-get install -y mcrypt libmcrypt-dev php7.4-cli php7.4-dev
 
 ADD mcrypt-1.0.3.tgz /tmp
 WORKDIR /tmp/mcrypt-1.0.3
