@@ -1,9 +1,6 @@
-FROM ubuntu:bionic as staging
+FROM ijuniorfu/ubuntu-base as staging
 
-RUN apt-get update \
-&& apt-get install -y software-properties-common language-pack-en-base \
-&& LC_ALL=en_US.UTF-8 \
-&& add-apt-repository -y ppa:ondrej/php \
+RUN add-apt-repository -y ppa:ondrej/php \
 && apt-get update \
 && apt-get install -y mcrypt libmcrypt-dev php7.4-cli php7.4-dev
 
@@ -15,14 +12,11 @@ ADD swoole-4.4.16.tgz /tmp
 WORKDIR /tmp/swoole-4.4.16
 RUN phpize  &&  ./configure &&  make  && make install
 
-FROM ubuntu:bionic
+FROM ijuniorfu/ubuntu-base
 
 MAINTAINER junior <ijuniorfu@gmail.com>
 
-RUN apt-get update \
-&& apt-get install -y software-properties-common language-pack-en-base \
-&& LC_ALL=en_US.UTF-8 \
-&& ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtimeadd-apt-repository -y ppa:ondrej/php \
+RUN add-apt-repository -y ppa:ondrej/php \
 && apt-get update \
 && apt-get install -y mcrypt libmcrypt-dev php7.4-fpm php7.4-cli php7.4-readline php7.4-mbstring php7.4-zip php7.4-intl php7.4-json php7.4-xml php7.4-curl php7.4-gd php7.4-pdo php7.4-mysql php-imagick php-redis php-mongodb php-memcache \
 && apt-get install -y nginx \
