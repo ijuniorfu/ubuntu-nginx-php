@@ -24,14 +24,13 @@ RUN add-apt-repository -y ppa:ondrej/php \
     && rm -rf /var/lib/apt/lists/*
 
 COPY --from=staging /usr/lib/php/20190902/mcrypt.so /usr/lib/php/20190902/mcrypt.so
+COPY --from=staging /usr/lib/php/20190902/swoole.so /usr/lib/php/20190902/swoole.so
+
 RUN touch /etc/php/7.4/mods-available/mcrypt.ini \
 && echo "extension=mcrypt.so" >> /etc/php/7.4/mods-available/mcrypt.ini \
 && ln -s /etc/php/7.4/mods-available/mcrypt.ini /etc/php/7.4/cli/conf.d/20-mcrypt.ini \
-&& ln -s /etc/php/7.4/mods-available/mcrypt.ini /etc/php/7.4/fpm/conf.d/20-mcrypt.ini
-
-
-COPY --from=staging /usr/lib/php/20190902/swoole.so /usr/lib/php/20190902/swoole.so
-RUN touch /etc/php/7.4/mods-available/swoole.ini \
+&& ln -s /etc/php/7.4/mods-available/mcrypt.ini /etc/php/7.4/fpm/conf.d/20-mcrypt.ini \
+&& touch /etc/php/7.4/mods-available/swoole.ini \
 && echo "extension=swoole.so" >> /etc/php/7.4/mods-available/swoole.ini \
 && ln -s /etc/php/7.4/mods-available/swoole.ini /etc/php/7.4/cli/conf.d/20-swoole.ini \
 && ln -s /etc/php/7.4/mods-available/swoole.ini /etc/php/7.4/fpm/conf.d/20-swoole.ini
